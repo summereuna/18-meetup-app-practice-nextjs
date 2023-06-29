@@ -18,6 +18,14 @@ const DUMMY_MEETUPS = [
     address: "📍 삶은 달걀",
     description: "삶은 달걀",
   },
+  {
+    id: "m3",
+    image:
+      "https://images.unsplash.com/photo-1617611647086-bccca8c2cf84?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+    title: "test 3",
+    address: "📍 333",
+    description: "333",
+  },
 ];
 
 function HomePage(props) {
@@ -32,6 +40,7 @@ export function getStaticProps() {
   //fetch data from an API
   return {
     props: { meetups: DUMMY_MEETUPS },
+    revalidate: 10,
   };
 }
 
