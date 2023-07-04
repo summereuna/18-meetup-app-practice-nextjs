@@ -1,4 +1,5 @@
 // 도메인.com/new-meetup
+//여긴 데이터 페치 필요 없음
 
 import NewMeetupForm from "../../components/meetups/NewMeetupForm";
 

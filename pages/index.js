@@ -36,11 +36,11 @@ function HomePage(props) {
   );
 }
 
-export function getStaticProps() {
+export async function getStaticProps() {
   //fetch data from an API
   return {
     props: { meetups: DUMMY_MEETUPS },
-    revalidate: 10,
+    revalidate: 1,
   };
 }
 
