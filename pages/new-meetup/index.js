@@ -1,5 +1,5 @@
 // 도메인.com/new-meetup
-
+import Head from "next/head";
 import { useRouter } from "next/router";
 import NewMeetupForm from "../../components/meetups/NewMeetupForm";
 
@@ -28,7 +28,13 @@ function newMeetupPage() {
 
   return (
     <>
-      <h1>newMeetupPage</h1>
+      <Head>
+        <title>Add a New Meetup</title>
+        <meta
+          name="description"
+          content="Add your own meetups and create amazing networking opportunities."
+        />
+      </Head>
       <NewMeetupForm onAddMeetup={addMeetupHandler} />
     </>
   );
