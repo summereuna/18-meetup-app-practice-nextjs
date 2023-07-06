@@ -38,6 +38,5 @@ jspm_packages
 .next
 
 .gitignore
-package-lock.json
 
 .env
