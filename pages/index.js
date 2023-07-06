@@ -1,32 +1,6 @@
 // 도메인.com/
+import { MongoClient } from "mongodb";
 import MeetupList from "../components/meetups/MeetupList";
-
-const DUMMY_MEETUPS = [
-  {
-    id: "m1",
-    image:
-      "https://images.unsplash.com/photo-1526199119161-4be1e3368d52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80",
-    title: "test 1",
-    address: "📍 삶은 여행, 나중에 카카오맵 api 넣어야지",
-    description: "삶은 여행",
-  },
-  {
-    id: "m2",
-    image:
-      "https://images.unsplash.com/photo-1617611647086-bccca8c2cf84?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    title: "test 2",
-    address: "📍 삶은 달걀",
-    description: "삶은 달걀",
-  },
-  {
-    id: "m3",
-    image:
-      "https://images.unsplash.com/photo-1617611647086-bccca8c2cf84?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-    title: "test 3",
-    address: "📍 333",
-    description: "333",
-  },
-];
 
 function HomePage(props) {
   return (
@@ -37,9 +11,32 @@ function HomePage(props) {
 }
 
 export async function getStaticProps() {
-  //fetch data from an API
+  const client = await MongoClient.connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.sdgjvq0.mongodb.net/meetups?retryWrites=true&w=majority`
+  );
+
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  //디비에서 find()메서드로 문서 가져오기: promise를 반환하는 async 작업임
+  //toArray()로 문서의 배열 받을 수 있음
+  const meetupsData = await meetupsCollection.find().toArray();
+
+  //가져온 후 연결 차단
+  client.close();
+
   return {
-    props: { meetups: DUMMY_MEETUPS },
+    props: {
+      //데이터 컨버티드
+      meetups: meetupsData.map((meetup) => ({
+        id: meetup._id.toString(),
+        title: meetup.title,
+        image: meetup.image,
+        address: meetup.address,
+        //description: meetup.description,
+      })),
+    }, //디비에서 받아온 데이터 props으로 보내기
     revalidate: 1,
   };
 }
