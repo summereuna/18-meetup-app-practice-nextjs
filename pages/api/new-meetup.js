@@ -16,7 +16,7 @@ async function handler(req, res) {
 
     //몽고db로 연결된 client
     const client = await MongoClient.connect(
-      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.sdgjvq0.mongodb.net/meetups?retryWrites=true&w=majority`
+      `mongodb+srv://${process.env.NEXT_PUBLIC_DB_USER}:${process.env.NEXT_PUBLIC_DB_PASS}@cluster0.sdgjvq0.mongodb.net/meetups?retryWrites=true&w=majority`
     );
     //이 코드는 클라이언트 측에 절대 노출되면 안된다. 하지만 API 경로 파일은 서버에서만 돌아가기 때문에 문제 없음
     //연결은 promise로 되돌아오기 때문에 handler함수를 await으로 입력하여 async function으로 전환한다.
