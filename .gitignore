@@ -39,3 +39,5 @@ jspm_packages
 
 .gitignore
 package-lock.json
+
+.env
